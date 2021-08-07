@@ -1,0 +1,17 @@
+name: altyenn
+version: 0.1.0
+
+authors:
+  - alyaskastorm <minealaska29@gmail.com>
+
+dependencies:
+  kemal:
+    github: kemalcr/kemal
+
+targets:
+  altyenn:
+    main: src/altyenn.cr
+
+crystal: 1.1.1
+
+license: MIT
