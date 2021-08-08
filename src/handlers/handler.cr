@@ -1,10 +1,24 @@
 get "/user/:user" do |env|
-    user = env.params.url["user"]
+    username = env.params.url["user"]
+
+    db = Storage::Storage.new
+    user = db.get(username)
+
+    password = user.password
+    email = user.email
+
     render "src/views/user.ecr", "src/views/layouts/layout.ecr"
 end
 
 get "/" do
     render "src/views/home.ecr", "src/views/layouts/layout.ecr"
+end
+
+get "/users" do
+    db = Storage::Storage.new
+    users = db.get_all
+    
+    render "src/views/users.ecr", "src/views/layouts/layout.ecr"
 end
 
 get "/create_user" do
@@ -17,17 +31,20 @@ post "/create_user" do |env|
         next "400"
     end
 
+    password = env.params.body["pswd"]?
+    if password.nil?
+        next "400"
+    end
+
     email = env.params.body["email"]? 
     if email.nil?
         next "400"
     end
 
-    pwd = env.params.body["pswd"]?
-    if pwd.nil?
-        next "400"
-    end
+    db = Storage::Storage.new
+    db.create(name, password, email)
 
-    "200"
+    "#{name}, #{password}, #{email}"
 end
 
 error 404 do

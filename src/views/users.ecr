@@ -1,0 +1,5 @@
+<ul class="list-group list-group-flush">
+    <%- users.each do |name| -%>
+        <li class="list-group-item"><a href="/user/<%= name.username %>"><%= name.username %></a> <%= name.password %> <%= name.email %></li>
+    <%- end -%>
+</ul> 
