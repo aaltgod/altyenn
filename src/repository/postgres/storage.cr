@@ -11,7 +11,7 @@ module Storage
     end
 
     class Storage
-        POSTGRES_URI = "postgres://cynthia:philippa@localhost:5555/vergen"
+        POSTGRES_URI = "postgres://cynthia:philippa@localhost:5556/vergen"
 
         def prepare
             db = DB.open POSTGRES_URI
