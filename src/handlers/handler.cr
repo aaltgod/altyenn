@@ -4,8 +4,11 @@ get "/user/:user" do |env|
     db = Storage::Storage.new
     user = db.get(username)
 
-    password = user.password
-    email = user.email
+    password, email = user.password, user.email
+    if password == ""
+        error = "User is not found"
+        next render "src/views/error.ecr", "src/views/layouts/layout.ecr"
+    end    
 
     render "src/views/user.ecr", "src/views/layouts/layout.ecr"
 end
@@ -28,25 +31,35 @@ end
 post "/create_user" do |env|
     name = env.params.body["name"]? 
     if name.nil?
-        next "400"
+        error = "400"
+        next render "src/views/error.ecr", "src/views/layouts/layout.ecr"
+    end
+
+    db = Storage::Storage.new
+    user = db.get(name)
+    if user.password != "" 
+        error = "User with this nickname already exists"
+        next render "src/views/error.ecr", "src/views/layouts/layout.ecr" 
     end
 
     password = env.params.body["pswd"]?
     if password.nil?
-        next "400"
+        error = "400"
+        next render "src/views/error.ecr", "src/views/layouts/layout.ecr"
     end
 
     email = env.params.body["email"]? 
     if email.nil?
-        next "400"
+        error = "400"
+        next render "src/views/error.ecr", "src/views/layouts/layout.ecr"
     end
 
-    db = Storage::Storage.new
     db.create(name, password, email)
 
-    "#{name}, #{password}, #{email}"
+    render "src/views/home.ecr", "src/views/layouts/layout.ecr"
 end
 
 error 404 do
-    "404"
+    error = "404"
+    render "src/views/error.ecr", "src/views/layouts/layout.ecr"
 end

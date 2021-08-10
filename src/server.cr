@@ -4,6 +4,7 @@ require "./views/*"
 require "db"
 require "pg"
 require "./repository/postgres/*"
+require "./constants/constant.cr"
 
 
 module Server
@@ -12,7 +13,6 @@ module Server
   
   db = Storage::Storage.new
   db.prepare
-  
 
   Kemal.run port 
 end

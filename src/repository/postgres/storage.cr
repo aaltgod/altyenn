@@ -41,7 +41,6 @@ module Storage
                     rs.each do
                         user.password = rs.read(String)
                         user.email = rs.read(String)
-                        puts user
                     end
                 end
             ensure
