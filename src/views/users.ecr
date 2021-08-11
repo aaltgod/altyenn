@@ -1,5 +1,28 @@
-<ul class="list-group list-group-flush">
+<table>
     <%- users.each do |name| -%>
-        <li class="list-group-item"><a href="/user/<%= name.username %>"><%= name.username %></a> <%= name.password %> <%= name.email %></li>
+        <tr>
+            <th class="list-group-item"><a href="/user/<%= name.username %>"><%= name.username %></a> <%= name.password %> <%= name.email %></th>
+        </tr>
     <%- end -%>
-</ul> 
+</table> 
+
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: center;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+
+
+

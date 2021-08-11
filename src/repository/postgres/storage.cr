@@ -16,8 +16,10 @@ module Storage
         def prepare
             db = DB.open POSTGRES_URI
             begin 
-                db.exec "DROP TABLE IF EXISTS users"
-                db.exec "CREATE TABLE users(user_id SERIAL PRIMARY KEY, username VARCHAR(100), password VARCHAR(100), email VARCHAR(100))"
+                # db.exec "DROP TABLE IF EXISTS users"
+                # db.exec "CREATE TABLE users(user_id SERIAL PRIMARY KEY, username VARCHAR(100), password VARCHAR(100), email VARCHAR(100))"
+            rescue ex : Exception
+                puts "Prepare exception : #{ex}"
             ensure
                 db.close
             end
@@ -27,6 +29,8 @@ module Storage
             db = DB.open POSTGRES_URI
             begin
                 db.exec "INSERT INTO users(username, password, email) VALUES($1, $2, $3)", username, password, email            
+            rescue ex : Exception
+                puts "Create exception : #{ex}"
             ensure
                 db.close
             end
@@ -34,7 +38,7 @@ module Storage
 
         def get(username : String)
             db = DB.open POSTGRES_URI
-            user = User.new(username)
+            user = User.new
 
             begin
                 db.query "SELECT password, email FROM users WHERE username=$1", username do |rs|
@@ -43,6 +47,8 @@ module Storage
                         user.email = rs.read(String)
                     end
                 end
+            rescue ex : Exception
+                puts "Create exception : #{ex}"
             ensure
                 db.close
             end
@@ -66,6 +72,8 @@ module Storage
                         users << user
                     end
                 end
+            rescue ex : Exception
+                puts "Create exception : #{ex}"
             ensure
                 db.close
             end

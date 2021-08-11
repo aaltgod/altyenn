@@ -9,6 +9,7 @@ require "./constants/constant.cr"
 
 module Server
   VERSION = "0.1.0"
+  DEBUG = false
   port = 5010
   
   db = Storage::Storage.new

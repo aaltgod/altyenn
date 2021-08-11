@@ -1,11 +1,10 @@
 get "/user/:user" do |env|
     username = env.params.url["user"]
-
     db = Storage::Storage.new
     user = db.get(username)
-
     password, email = user.password, user.email
-    if password == ""
+    
+    if user.password == ""
         error = "User is not found"
         next render "src/views/error.ecr", "src/views/layouts/layout.ecr"
     end    
@@ -29,15 +28,19 @@ get "/create_user" do
 end
 
 post "/create_user" do |env|
+    puts env.params.body
+    
     name = env.params.body["name"]? 
     if name.nil?
-        error = "400"
+        env.response.status_code = 400
+        error = "400"        
         next render "src/views/error.ecr", "src/views/layouts/layout.ecr"
     end
 
     db = Storage::Storage.new
     user = db.get(name)
-    if user.password != "" 
+    if user.username != "" 
+        env.response.status_code = 400
         error = "User with this nickname already exists"
         next render "src/views/error.ecr", "src/views/layouts/layout.ecr" 
     end
@@ -50,9 +53,12 @@ post "/create_user" do |env|
 
     email = env.params.body["email"]? 
     if email.nil?
+        env.response.status_code = 400
         error = "400"
         next render "src/views/error.ecr", "src/views/layouts/layout.ecr"
     end
+
+    puts "HEADERS", name, password, email
 
     db.create(name, password, email)
 
