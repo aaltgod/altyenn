@@ -28,10 +28,9 @@ get "/create_user" do
 end
 
 post "/create_user" do |env|
-    puts env.params.body
-    
-    name = env.params.body["name"]? 
+    name = env.params.body["name"]?
     if name.nil?
+        puts "Param [name] doesn't exist"
         env.response.status_code = 400
         error = "400"        
         next render "src/views/error.ecr", "src/views/layouts/layout.ecr"
@@ -47,22 +46,40 @@ post "/create_user" do |env|
 
     password = env.params.body["pswd"]?
     if password.nil?
+        puts "Param [pswd] doesn't exist"
         error = "400"
         next render "src/views/error.ecr", "src/views/layouts/layout.ecr"
     end
 
     email = env.params.body["email"]? 
     if email.nil?
+        puts "Param [email] doesn't exist"
         env.response.status_code = 400
         error = "400"
         next render "src/views/error.ecr", "src/views/layouts/layout.ecr"
     end
 
-    puts "HEADERS", name, password, email
+    balance = env.params.body["balance"]?
+    if balance.nil?
+        puts "Param [balance] doesn't exist"
+        env.response.status_code = 400
+        error = "400"
+        next render "src/views/error.ecr", "src/views/layouts/layout.ecr"
+    end
+    balance = balance.to_i
 
-    db.create(name, password, email)
+    role = env.params.body["role"]? 
+    if role.nil?
+        puts "Param [role] doesn't exist"
+        env.response.status_code = 400
+        error = "400"
+        next render "src/views/error.ecr", "src/views/layouts/layout.ecr"
+    end
 
-    render "src/views/home.ecr", "src/views/layouts/layout.ecr"
+    db.create(name, password, email, balance, role)
+
+    env.response.status_code = 200
+    env.redirect "/"
 end
 
 error 404 do

@@ -1,28 +1,56 @@
-<table>
-    <%- users.each do |name| -%>
-        <tr>
-            <th class="list-group-item"><a href="/user/<%= name.username %>"><%= name.username %></a> <%= name.password %> <%= name.email %></th>
-        </tr>
+<table class="table"
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>Password</th>
+        <th>Email</th>
+        <th>Balance</th>
+        <th>Role</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%- users.each do |name| -%>
+        <%- if name.role == "Admin" -%>
+          <tr class="table-warning">
+            <td><a href="/user/<%= name.username %>"><%= name.username %></a></td>
+            <td><%= name.password %></td>
+            <td><%= name.email %></td>
+            <td><%= name.balance %></td>
+            <td><%= name.role %></td>
+          </tr>
+        <%- elsif name.role == "Admin'ka" -%>
+          <tr class="table-danger">
+            <td><a href="/user/<%= name.username %>"><%= name.username %></a></td>
+            <td><%= name.password %></td>
+            <td><%= name.email %></td>
+            <td><%= name.balance %></td>
+            <td><%= name.role %></td>
+          </tr>
+        <%- elsif name.role == "Slave" -%>
+          <tr class="table-info" >
+            <td><a href="/user/<%= name.username %>"><%= name.username %></a></td>
+            <td><%= name.password %></td>
+            <td><%= name.email %></td>
+            <td><%= name.balance %></td>
+            <td><%= name.role %></td>
+          </tr>
+        <%- else -%>
+          <tr class="table-success">
+            <td><a href="/user/<%= name.username %>"><%= name.username %></a></td>
+            <td><%= name.password %></td>
+            <td><%= name.email %></td>
+            <td><%= name.balance %></td>
+            <td><%= name.role %></td>
+          </tr>
+        <%- end -%>        
+      </tbody>
     <%- end -%>
-</table> 
+</ul>
 
 <style>
-table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
-}
-
-td, th {
-  border: 1px solid #dddddd;
-  text-align: center;
-  padding: 8px;
-}
-
-tr:nth-child(even) {
-  background-color: #dddddd;
-}
+  a {
+    color: black;
+  }
 </style>
-
 
 

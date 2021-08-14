@@ -1,6 +1,15 @@
 <div class="container">
   <h2>Create a user</h2>
-  <form method="POST"> 
+  <form method="POST">
+    <div class="form-group">
+      <label for="role">Choose a role:</label>
+      <select id="role" name="role">
+        <option value="Admin">Admin</option>
+        <option value="Admin'ka">Admin'ka</option>
+        <option value="Slave">Slave</option>
+        <option value="Rabotyaga">Rabotyaga</option>
+      </select> 
+    </div> 
     <div class="form-group">
       <label for="name">Name:</label>
       <input type="name" class="form-control" id="name" placeholder="Enter name" name="name" required="true">
@@ -12,6 +21,10 @@
     <div class="form-group">
       <label for="email">Email:</label>
       <input type="email" class="form-control" id="email" placeholder="Enter email" name="email" required="true">
+    </div>
+    <div class="form-group">
+      <label for="balance">Balance:</label>
+      <input type="balance" class="form-control" id="balance" placeholder="Enter balance" name="balance" required="true">
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
