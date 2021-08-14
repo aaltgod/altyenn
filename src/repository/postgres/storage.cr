@@ -21,7 +21,7 @@ module Storage
                 db.exec "DROP TABLE IF EXISTS users"
                 db.exec "CREATE TABLE users(user_id SERIAL PRIMARY KEY, username VARCHAR(100), password VARCHAR(100), email VARCHAR(100), balance INTEGER, role VARCHAR(20))"
             rescue ex : Exception
-                puts "Prepare exception : #{ex}"
+                Log.info {"Prepare exception : #{ex}"}
             ensure
                 db.close
             end
@@ -33,7 +33,7 @@ module Storage
                 db.exec "INSERT INTO users(username, password, email, balance, role) VALUES($1, $2, $3, $4, $5)",
                  username, password, email, balance, role             
             rescue ex : Exception
-                puts "Create exception : #{ex}"
+                Log.info {"Create exception : #{ex}"}
             ensure
                 db.close
             end
@@ -53,7 +53,7 @@ module Storage
                     end
                 end
             rescue ex : Exception
-                puts "Create exception : #{ex}"
+                Log.info {"Create exception : #{ex}"}
             ensure
                 db.close
             end
@@ -80,7 +80,7 @@ module Storage
                     end
                 end
             rescue ex : Exception
-                puts "Create exception : #{ex}"
+                Log.info {"Create exception : #{ex}"}
             ensure
                 db.close
             end

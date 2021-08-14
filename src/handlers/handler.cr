@@ -22,7 +22,7 @@ get "/users" do |env|
     unless query.size == 0
         field = query["field"]?
         if field.nil?
-            puts "Req [/users] Param [field] doesn't exist"
+            Log.info {"Req [/users] Param [field] doesn't exist"}
             env.response.status_code = 400
             error = "400"
             next render "src/views/error.ecr", "src/views/layouts/layout.ecr"
@@ -30,7 +30,7 @@ get "/users" do |env|
 
         order = query["order"]?
         if order.nil?
-            puts "Req [/users] Param [order] doesn't exist"
+            Log.info {"Req [/users] Param [order] doesn't exist"}
             env.response.status_code = 400
             error = "400"
             next render "src/views/error.ecr", "src/views/layouts/layout.ecr"
@@ -50,7 +50,7 @@ end
 post "/create_user" do |env|
     name = env.params.body["name"]?
     if name.nil?
-        puts "Param [name] doesn't exist"
+        Log.info {"Req [/create_user] Param [name] doesn't exist"}
         env.response.status_code = 400
         error = "400"        
         next render "src/views/error.ecr", "src/views/layouts/layout.ecr"
@@ -66,22 +66,22 @@ post "/create_user" do |env|
 
     password = env.params.body["pswd"]?
     if password.nil?
-        puts "Param [pswd] doesn't exist"
+        Log.info {"Req [/create_user] Param [pswd] doesn't exist"}
         error = "400"
         next render "src/views/error.ecr", "src/views/layouts/layout.ecr"
     end
 
     email = env.params.body["email"]? 
     if email.nil?
-        puts "Param [email] doesn't exist"
+        Log.info {"Req [/create_user] Param [email] doesn't exist"}
         env.response.status_code = 400
         error = "400"
         next render "src/views/error.ecr", "src/views/layouts/layout.ecr"
     end
 
     balance = env.params.body["balance"]?
-    if balance.nil?
-        puts "Param [balance] doesn't exist"
+    if balance.nil? || balance.to_i?.nil?
+        Log.info {"Req [/create_user] Param [balance] doesn't exist"}
         env.response.status_code = 400
         error = "400"
         next render "src/views/error.ecr", "src/views/layouts/layout.ecr"
@@ -90,7 +90,7 @@ post "/create_user" do |env|
 
     role = env.params.body["role"]? 
     if role.nil?
-        puts "Param [role] doesn't exist"
+        Log.info {"Req [/create_user] Param [role] doesn't exist"}
         env.response.status_code = 400
         error = "400"
         next render "src/views/error.ecr", "src/views/layouts/layout.ecr"

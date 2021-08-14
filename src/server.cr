@@ -14,6 +14,6 @@ module Server
   
   db = Storage::Storage.new
   db.prepare
-
+  
   Kemal.run port 
 end
