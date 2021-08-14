@@ -16,9 +16,29 @@ get "/" do
     render "src/views/home.ecr", "src/views/layouts/layout.ecr"
 end
 
-get "/users" do
+get "/users" do |env|
+    field, order = "", ""
+    query = env.params.query
+    unless query.size == 0
+        field = query["field"]?
+        if field.nil?
+            puts "Req [/users] Param [field] doesn't exist"
+            env.response.status_code = 400
+            error = "400"
+            next render "src/views/error.ecr", "src/views/layouts/layout.ecr"
+        end
+
+        order = query["order"]?
+        if order.nil?
+            puts "Req [/users] Param [order] doesn't exist"
+            env.response.status_code = 400
+            error = "400"
+            next render "src/views/error.ecr", "src/views/layouts/layout.ecr"
+        end
+    end
+
     db = Storage::Storage.new
-    users = db.get_all
+    users = db.get_all(field.size > 0 ? field : "username", order.size > 0 ? order : "ASC")
     
     render "src/views/users.ecr", "src/views/layouts/layout.ecr"
 end

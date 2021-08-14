@@ -1,4 +1,19 @@
-<table class="table"
+<table class="table">
+  <form method="GET">
+      <div class="form-group">
+        <label for="field">Sort by</label>
+        <select id="field" name="field">
+          <option value="username">Username</option>
+          <option value="balance">Balance</option>
+        </select>
+        <label for="order">Order by</label>
+        <select id="order" name="order">
+          <option value="ASC">Ascending</option>
+          <option value="DESC">Descending</option>
+        </select> 
+      </div>
+      <button type="submit" class="btn btn-dark">Sort</button>
+  </form>
     <thead>
       <tr>
         <th>Username</th>

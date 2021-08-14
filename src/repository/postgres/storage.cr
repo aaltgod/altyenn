@@ -18,8 +18,8 @@ module Storage
         def prepare
             db = DB.open POSTGRES_URI
             begin 
-                #db.exec "DROP TABLE IF EXISTS users"
-                #db.exec "CREATE TABLE users(user_id SERIAL PRIMARY KEY, username VARCHAR(100), password VARCHAR(100), email VARCHAR(100), balance INTEGER, role VARCHAR(20))"
+                db.exec "DROP TABLE IF EXISTS users"
+                db.exec "CREATE TABLE users(user_id SERIAL PRIMARY KEY, username VARCHAR(100), password VARCHAR(100), email VARCHAR(100), balance INTEGER, role VARCHAR(20))"
             rescue ex : Exception
                 puts "Prepare exception : #{ex}"
             ensure
@@ -61,12 +61,12 @@ module Storage
             return user
         end
 
-        def get_all
+        def get_all(field : String, order : String)
             db = DB.open POSTGRES_URI
             users = [] of User
 
             begin 
-                db.query "SELECT username, password, email, balance, role FROM users" do |rs|
+                db.query "SELECT username, password, email, balance, role FROM users ORDER BY #{field} #{order}" do |rs|
                     rs.each do
                         user = User.new(
                             rs.read(String),
