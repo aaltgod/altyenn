@@ -18,8 +18,8 @@ module Storage
         def prepare
             db = DB.open POSTGRES_URI
             begin 
-                db.exec "DROP TABLE IF EXISTS users"
-                db.exec "CREATE TABLE users(user_id SERIAL PRIMARY KEY, username VARCHAR(100), password VARCHAR(100), email VARCHAR(100), balance INTEGER, role VARCHAR(20))"
+                # db.exec "DROP TABLE IF EXISTS users"
+                # db.exec "CREATE TABLE users(user_id SERIAL PRIMARY KEY, username VARCHAR(100), password VARCHAR(100), email VARCHAR(100), balance INTEGER, role VARCHAR(20))"
             rescue ex : Exception
                 Log.info {"Prepare exception : #{ex}"}
             ensure

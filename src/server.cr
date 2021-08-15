@@ -5,6 +5,7 @@ require "db"
 require "pg"
 require "./repository/postgres/*"
 require "./constants/constant.cr"
+require "./tools/tool.cr"
 
 
 module Server

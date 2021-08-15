@@ -21,16 +21,16 @@ get "/users" do |env|
     query = env.params.query
     unless query.size == 0
         field = query["field"]?
-        if field.nil?
-            Log.info {"Req [/users] Param [field] doesn't exist"}
+        if field.nil? || !Tool.field_exists?(field)
+            Log.info {"Req [/users] Param [field] doesn't exist or not available"}
             env.response.status_code = 400
             error = "400"
             next render "src/views/error.ecr", "src/views/layouts/layout.ecr"
         end
 
         order = query["order"]?
-        if order.nil?
-            Log.info {"Req [/users] Param [order] doesn't exist"}
+        if order.nil? || !Tool.order_exists?(order)
+            Log.info {"Req [/users] Param [order] doesn't exist or not available"}
             env.response.status_code = 400
             error = "400"
             next render "src/views/error.ecr", "src/views/layouts/layout.ecr"
